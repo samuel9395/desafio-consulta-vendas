@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: sales-inquiry
+
+  profiles:
+    active: DEVELOPER
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: dev
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
