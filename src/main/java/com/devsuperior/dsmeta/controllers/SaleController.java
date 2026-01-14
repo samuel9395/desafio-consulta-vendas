@@ -3,6 +3,8 @@ package com.devsuperior.dsmeta.controllers;
 import com.devsuperior.dsmeta.dto.SaleReportDTO;
 import com.devsuperior.dsmeta.dto.SellerMinDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,12 +33,13 @@ public class SaleController {
 
     // Endpoint do relatório
     @GetMapping(value = "/report")
-    public ResponseEntity<List<SaleReportDTO>> getReport(
+    public ResponseEntity<Page<SaleReportDTO>> getReport(
             @RequestParam(name = "name", defaultValue = "") String name,
             @RequestParam(name = "minDate", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate minDate,
             @RequestParam(name = "maxDate", required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate maxDate
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate maxDate,
+            Pageable pageable
     ) {
 
         // Se a data final não for informada, usa a data atual
@@ -49,7 +52,7 @@ public class SaleController {
             minDate = maxDate.minusYears(1L);
         }
 
-        List<SaleReportDTO> dto = service.getReport(name, minDate, maxDate);
+        Page<SaleReportDTO> dto = service.getReport(name, minDate, maxDate, pageable);
         return ResponseEntity.ok(dto);
     }
 

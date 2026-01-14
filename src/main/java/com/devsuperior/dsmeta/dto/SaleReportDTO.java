@@ -1,5 +1,6 @@
 package com.devsuperior.dsmeta.dto;
 
+import com.devsuperior.dsmeta.entities.Sale;
 import com.devsuperior.dsmeta.projections.SaleProjection;
 
 import java.time.LocalDate;
@@ -17,17 +18,6 @@ public class SaleReportDTO {
         this.date = date;
         this.amount = amount;
         this.sellerName = sellerName;
-    }
-
-    /*
-     * Construtor que recebe a Projection
-     * Usado nas consultas personalizadas
-     */
-    public SaleReportDTO(SaleProjection projection) {
-        id = projection.getId();
-        date = projection.getDate();
-        amount = projection.getAmount();
-        sellerName = projection.getName();
     }
 
     public Long getId() {

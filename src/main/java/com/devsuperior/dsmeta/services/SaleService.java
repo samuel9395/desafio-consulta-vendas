@@ -9,6 +9,8 @@ import com.devsuperior.dsmeta.dto.SellerMinDTO;
 import com.devsuperior.dsmeta.projections.SaleProjection;
 import com.devsuperior.dsmeta.projections.SellerProjection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.devsuperior.dsmeta.dto.SaleMinDTO;
@@ -29,13 +31,10 @@ public class SaleService {
 	}
 
     // Gera o relatório de vendas
-    public List<SaleReportDTO> getReport(String name, LocalDate minDate, LocalDate maxDate) {
+    public Page<SaleReportDTO> getReport(String name, LocalDate minDate, LocalDate maxDate, Pageable pageable) {
 
-        // Converte Projection → DTO
-        List<SaleProjection> list = repository.getReport(name, minDate, maxDate);
-        return list.stream()
-                .map(x -> new SaleReportDTO(x))  // Usa o construtor que recebe SaleProjection
-                .toList();
+        Page<SaleProjection> result = repository.getReport(name, minDate, maxDate, pageable);
+        return result.map(s -> new SaleReportDTO(s.getId(), s.getDate(), s.getAmount(), s.getName()));
     }
 
     // Sumário de vendas por vendedor
@@ -48,3 +47,11 @@ public class SaleService {
 
     }
 }
+
+/*
+*    // Converte Projection → DTO
+        Page<SaleReportDTO> list = repository.getReport(name, minDate, maxDate, pageable);
+        // Usa o construtor que recebe SaleProjection
+        return list.map(entity -> new SaleReportDTO(entity));
+        *
+*/
