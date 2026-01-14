@@ -47,11 +47,3 @@ public class SaleService {
 
     }
 }
-
-/*
-*    // Converte Projection → DTO
-        Page<SaleReportDTO> list = repository.getReport(name, minDate, maxDate, pageable);
-        // Usa o construtor que recebe SaleProjection
-        return list.map(entity -> new SaleReportDTO(entity));
-        *
-*/

@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface SaleRepository extends JpaRepository<Sale, Long> {
 
-    // Consulta nativa para gerar o relatório de vendas
+    // Consulta JPQL para gerar o relatório de vendas
     @Query(
             "SELECT s.id as id, s.date as date, s.amount as amount, s.seller.name as name " +
             "FROM Sale s " +
